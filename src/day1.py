@@ -9,7 +9,7 @@ def main(source):
     r1 = part1(data)
     print(r1)
 
-    data2 = [i + j + k for i, j, k in zip(data[:-2], data[1:-1], data[2:])]
+    data2 = [sum(ijk) for ijk in zip(data[:-2], data[1:-1], data[2:])]
     r2 = part1(data2)
     print(r2)
 
