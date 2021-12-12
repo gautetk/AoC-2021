@@ -30,22 +30,27 @@ def main(source):
 
     oState = [[int(o) for o in line.strip()] for line in lines]
 
-    r1 = 0
-    for _ in range(100):
-        oState = step(oState)
-        r1 += reduce(lambda f, l: f + l.count(0), oState, 0)
-
+    r1 = numberOfFlashes100(oState)
     print(r1)
 
-    oState = [[int(o) for o in line.strip()] for line in lines]
+    r2 = allFlashes(oState)
+    print(r2)
+
+
+def numberOfFlashes100(oState):
+    numberOfFlashes = 0
+    for _ in range(100):
+        oState = step(oState)
+        numberOfFlashes += reduce(lambda f, l: f + l.count(0), oState, 0)
+    return numberOfFlashes
+
+
+def allFlashes(oState):
     for i in range(2000):
         oState = step(oState)
         flashes = reduce(lambda f, l: f + l.count(0), oState, 0)
         if flashes == 100:
-            break
-
-    r2 = i + 1
-    print(r2)
+            return i + 1
 
 
 def step(oState):
