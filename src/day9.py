@@ -1,5 +1,5 @@
 from functools import reduce
-
+import copy
 
 def main(source):
     with open(source) as r:
@@ -32,19 +32,18 @@ def main(source):
 
 
 def basin(depth, locs):
-    newLocs = set()
-    for r, c in locs:
-        if depth[r - 1][c] != 9 and (r - 1, c) not in locs:
-            newLocs.add((r - 1, c))
-        if depth[r + 1][c] != 9 and (r + 1, c) not in locs:
-            newLocs.add((r + 1, c))
-        if depth[r][c - 1] != 9 and (r, c - 1) not in locs:
-            newLocs.add((r, c - 1))
-        if depth[r][c + 1] != 9 and (r, c + 1) not in locs:
-            newLocs.add((r, c + 1))
+    oldLocs = copy.deepcopy(locs)
+    for r, c in oldLocs:
+        if depth[r - 1][c] != 9:
+            locs.add((r - 1, c))
+        if depth[r + 1][c] != 9:
+            locs.add((r + 1, c))
+        if depth[r][c - 1] != 9:
+            locs.add((r, c - 1))
+        if depth[r][c + 1] != 9:
+            locs.add((r, c + 1))
 
-    if newLocs:
-        locs = locs.union(newLocs)
+    if len(oldLocs) < len(locs):
         locs = basin(depth, locs)
 
     return locs
